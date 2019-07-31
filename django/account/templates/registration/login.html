@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+<link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}(Oasis) Log-in{% endblock %}
+
+{% block content %}
+<h1>Log-in</h1>
+
+{% if form.errors %}
+<p>
+    Your username and password didn't match.
+    Please try again.
+</p>
+{% else %}
+<p>
+    Please, use the following form to log-in:
+</p>
+{% endif %}
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+
+    {% for field in form.visible_fields %}
+    <p class="form-field">
+        {{ field.label_tag }}
+        <div class="field-content">
+            {{ field.errors }}
+            <span class="field">{{ field }}</span>
+            {{ field.help_text }}
+        </div>
+    </p>
+    {% endfor %}
+
+    <input type="hidden" name="next" value="{{ next }}" />
+
+    <button type="submit">Log in</button>
+</form>
+
+<p>
+    <a href="{% url 'password_reset' %}">Forgotten your password ?</a>
+</p>
+{% endblock %}

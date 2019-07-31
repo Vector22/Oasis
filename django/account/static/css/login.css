@@ -1,0 +1,25 @@
+ul li {
+    display: inline-block;
+}
+
+h1 {
+    border-bottom: 2px solid gray;
+    padding-bottom: 20px;
+    margin-bottom: 70px;
+}
+
+form {
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+label {
+    margin-bottom: 15px;
+    font-size: 25px;
+    color: gray;
+}
+
+button {
+    width: 80px;
+    height: 38px;
+}
