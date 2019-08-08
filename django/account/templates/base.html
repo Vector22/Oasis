@@ -55,6 +55,20 @@
             <div id="main-body" class="col-md-8">
                 {% block content %}
                 {% endblock %}
+
+                <!-- Django messages -->
+                <p id="messages">
+                    {% if messages %}
+                    <ul id=switch>
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                            <a class="close">x</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </p>
             </div>
 
             <aside id="aside-body" class="col-md-3 offset-md-1">
@@ -76,6 +90,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
     {% endblock %}
 </body>
 

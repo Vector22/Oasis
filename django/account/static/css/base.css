@@ -33,6 +33,29 @@ h1 {
     background-color: silver;
 }
 
+#messages {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#messages + ul {
+    list-style: none;
+}
+
+.success {
+    color: white;
+    background-color: rgba(138, 236, 138, 0.7);
+    height: 40px;
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+}
+
+.error {
+    color: black;
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
 #aside-body {
     border: 3px dashed lightskyblue;
     background-color: aquamarine;

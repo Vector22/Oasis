@@ -1,0 +1,7 @@
+{
+    "name": "0asis",
+    "version": "0.1.0",
+    "dependencies": {
+        "eslint": "~6.1"
+    }
+}

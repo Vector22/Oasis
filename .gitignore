@@ -1,3 +1,4 @@
 env/
 .vscode/
 django/config/__pycache__/
+node_modules/
