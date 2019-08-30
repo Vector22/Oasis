@@ -36,8 +36,11 @@
 
                 <ul class="navbar-nav ml-auto">
                     {% if request.user.is_authenticated %}
+                    <span class="navbar-text">
+                        Hello {{ request.user.username }},
+                    </span>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Hello {{ request.user.username }}, Logout</a>
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -58,16 +61,16 @@
 
                 <!-- Django messages -->
                 <p id="messages">
-                    {% if messages %}
-                    <ul id=switch>
+                    <ul id="message-item">
+                        {% if messages %}
                         {% for message in messages %}
                         <li class="{{ message.tags }}">
                             {{ message|safe }}
                             <a class="close">x</a>
                         </li>
                         {% endfor %}
+                        {% endif %}
                     </ul>
-                    {% endif %}
                 </p>
             </div>
 
@@ -85,12 +88,13 @@
         {% endblock %}
     </footer>
 
-    {% block scripts %}
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/base.js' %}"></script>
+
+    <!-- Additional JavaScript file -->
+    {% block scripts %}
     {% endblock %}
 </body>
 
