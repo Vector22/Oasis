@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['oasis.com', 'localhost', '127.0.0.1',
 INSTALLED_APPS = [
     # thirds party apps
     'social_django',
+    'sorl.thumbnail',
     # locals apps
     'account.apps.AccountConfig',
     'images.apps.ImagesConfig',

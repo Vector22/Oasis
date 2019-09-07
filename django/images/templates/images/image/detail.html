@@ -11,15 +11,30 @@
 <h1>{{ image.title }}</h1>
 
 <div id="detail-block">
-    <img src="{{ image.image.url }}" class="image-detail">
+    {% load thumbnail %}
+    {% thumbnail image.image "300" as im %}
+    <a href="{{ image.image.url }}">
+        <img src="{{ im.url }}" class="image-detail">
+    </a>
+    {% endthumbnail %}
 
-    {% with total_likes=image.users_like.count %}
+    {% with total_likes=image.users_like.count users_like=image.users_like.all %}
     <div class="image-info">
-        <button class="btn btn-lg">
+        <button class="btn btn-lg btn-default count">
             like{{ total_likes|pluralize }}
-            <span class="count badge text-success">
+            <span class="total badge text-success">
                 {{ total_likes }}
             </span>
+        </button>
+        <button class="btn btn-lg btn-success">
+            <a href="#" data-id="{{ image.id }}" data-action="{% if request.user in users_like %}un{% endif %}like"
+                class="like">
+                {% if request.user not in users_like %}
+                Like
+                {% else %}
+                Unlike
+                {% endif %}
+            </a>
         </button>
         {{ image.description|linebreaks }}
     </div>
@@ -36,4 +51,13 @@
     </div>
     {% endwith %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Load jscookie from CDN to use it in AJAX setup -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<!-- AJAX setup script -->
+<script type="text/javascript" src="{% static 'js/ajax-setup.js' %}"></script>
+<!-- jQuery UN/LIKE script -->
+<script type="text/javascript" src="{% static 'js/images/detail.js' %}"></script>
 {% endblock %}
