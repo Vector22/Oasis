@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ image.title }}{% endblock %}
+
+{% block styles %}
+<link href="{% static 'css/images/detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<h1>{{ image.title }}</h1>
+
+<div id="detail-block">
+    <img src="{{ image.image.url }}" class="image-detail">
+
+    {% with total_likes=image.users_like.count %}
+    <div class="image-info">
+        <button class="btn btn-lg">
+            like{{ total_likes|pluralize }}
+            <span class="count badge text-success">
+                {{ total_likes }}
+            </span>
+        </button>
+        {{ image.description|linebreaks }}
+    </div>
+
+    <div class="image-likes">
+        {% for user in image.users_like.all %}
+        <div>
+            <img src="{{ user.profile.photo.url }}">
+            <p>{{ user.first_name }}</p>
+        </div>
+        {% empty %}
+        Nobody likes this image yet.
+        {% endfor %}
+    </div>
+    {% endwith %}
+</div>
+{% endblock %}

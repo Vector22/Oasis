@@ -1,14 +1,24 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block title %}Bookmark an image{% endblock %}
 
+{% block styles %}
+<link href="{% static 'css/images/create.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <h1>Bookmark an image</h1>
-<img src="{{ request.GET.url }}" class="image-preview">
 
-<form action="." method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Bookmark it</button>
-</form>
+<div class="create-block row">
+    <div class="image-block col-md-6">
+        <img src="{{ request.GET.url }}" class="image-preview">
+    </div>
+
+    <form action="." method="post" class="form col-md-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Bookmark it</button>
+    </form>
+</div>
 {% endblock %}

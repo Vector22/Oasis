@@ -1,0 +1,41 @@
+@import url(http://fonts.googleapis.com/css?family=Muli);
+
+#bookmarklet {
+    position: fixed;
+    left: 880px;
+    right: 10px;
+    top: 0px;
+    bottom: 10px;
+    width: 470px;
+    height: auto;
+    padding-left: 6px;
+    background-color: rgba(228, 241, 237, 0.6);
+    border-bottom: 4px solid lime;
+    box-shadow: 1px 1px 5px lime inset;
+    z-index: 100000000;
+}
+
+#bookmarklet h1 {
+    margin: 5px 5px 8px 5px;
+    font-family: 'Muli', 'sans-serif';
+    font-size: 1.3em;
+}
+
+#close {
+    font-size: 2em;
+    font-weight: bolder;
+    position: fixed;
+    top: 2px;
+    right: 4px;
+}
+
+.images img {
+    width: 80px;
+    height: 80px;
+    margin: 2px;
+}
+
+.images img:hover {
+    border: 2px inset lime;
+    opacity: 0.8;
+}

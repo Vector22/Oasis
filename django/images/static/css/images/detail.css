@@ -1,0 +1,21 @@
+h1 {
+    background-color: whitesmoke;
+    margin: 5px 0px;
+    padding: 4px;
+}
+
+#detail-block img, #detail-block .image-info {
+    display: inline-block;
+}
+
+#detail-block .image-info {
+    width: 25%;
+    margin-left: 25px;
+}
+
+.btn {
+    border-radius: 30px/30px;
+    border: 2px solid silver;
+    box-shadow: 1px 1px 3px;
+    margin-bottom: 10px;
+}

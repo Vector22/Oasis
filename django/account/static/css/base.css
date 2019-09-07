@@ -23,6 +23,11 @@ header {
     margin-left: 15px;
 }
 
+.active {
+    border-bottom: 1px solid blue;
+    padding-bottom: 2px;
+}
+
 h1 {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }

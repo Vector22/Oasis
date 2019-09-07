@@ -1,0 +1,10 @@
+
+.image-block {
+    width: 400px;
+    border: dashed blue 1px;
+}
+
+.image-block img {
+    max-height: 100%;
+    max-width: 100%;
+  }

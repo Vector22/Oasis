@@ -26,7 +26,7 @@ SECRET_KEY = '5^w!dbg4(@cnun_u)w7#tb&gv7-z!lozpa)pkxj%+=q_g)z*0@'
 DEBUG = True
 
 ALLOWED_HOSTS = ['oasis.com', 'localhost', '127.0.0.1',
-                 'oasis.localtunnel.me']
+                 'oasis.localtunnel.me', 'd7182ac6.ngrok.io']
 
 
 # Application definition
