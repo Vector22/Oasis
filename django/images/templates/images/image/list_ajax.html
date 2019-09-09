@@ -1,0 +1,21 @@
+{% load thumbnail %}
+
+<div class="image row">
+    {% for image in images %}
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <a href="{{ image.get_absolute_url }}">
+            {% thumbnail image.image "200x200" crop="90%" as im %}
+            <a href="{{ image.get_absolute_url }" class="thumbnail">
+                <img src="{{ im.url }}">
+            </a>
+            {% endthumbnail %}
+        </a>
+
+        <div class="info">
+            <a href="{{ image.get_absolute_url }}" class="title">
+                {{ image.title }}
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
