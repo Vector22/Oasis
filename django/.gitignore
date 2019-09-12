@@ -1,0 +1,6 @@
+config/__pycache__/
+account/__pycache__/
+account/migrations/__pycache__/
+images/__pycache__/
+images/migrations/__pycache__/
+media/cache/

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,13 +21,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '5^w!dbg4(@cnun_u)w7#tb&gv7-z!lozpa)pkxj%+=q_g)z*0@'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY',
+                            '5^w!dbg4(@cnun_u)w7#tb&gv7-z!lozpa)pkxj%+=q_g)z*0@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('ENV') == 'PRODUCTION' or os.environ.get('ENV_AWS') == 'PRODUCTION':
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['oasis.com', 'localhost', '127.0.0.1',
-                 'oasis.localtunnel.me', 'd7182ac6.ngrok.io']
+                 '.herokuapp.com', 'd7182ac6.ngrok.io']
 
 
 # Application definition
@@ -35,6 +40,8 @@ INSTALLED_APPS = [
     # thirds party apps
     'social_django',
     'sorl.thumbnail',
+    'storages',
+
     # locals apps
     'account.apps.AccountConfig',
     'images.apps.ImagesConfig',
@@ -48,6 +55,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -136,7 +146,9 @@ STATICFILES_DIRS = (
 # Serving Media files like user's photos and others
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Login and logout settings
 
@@ -166,3 +178,49 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '373723408738-uh0l60pb8a33ssbmj6ce9tdulb34dmtm.apps.googleusercontent.com'
 # Google Consumer Secret
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'iBJky8RwwzUog80yujsJr0aZ'
+
+# Serving static and media file from heroku and whitenoise
+if os.environ.get('ENV') == 'PRODUCTION':
+
+    # Static files settings
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+    # Extra places for collectstatic to find static files.
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+    )
+    # whitenoise gzip suppor
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES['default'].update(db_from_env)
+
+# Serving static and media files from s3 bucket
+if os.environ.get('ENV_AWS') == 'PRODUCTION':
+    # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", "")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", "")
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME", "")
+    # This will make sure that the file URL does not have unnecessary
+    # parameters like my access key.
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com'
+
+    # Static media settings
+    AWS_LOCATION = 'static'
+    STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME + \
+        '.s3.amazonaws.com/' + AWS_LOCATION + '/'
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
+    STATIC_ROOT = 'staticfiles'
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    )
+
+    # MEDIA_URL = STATIC_URL + 'media/'
+    # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'

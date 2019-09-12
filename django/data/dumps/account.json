@@ -1,0 +1,1 @@
+[{"model": "account.profile", "pk": 1, "fields": {"user": 1, "date_of_birth": "2010-12-01", "photo": "users/2019/08/01/rvector.jpeg"}}, {"model": "account.profile", "pk": 2, "fields": {"user": 2, "date_of_birth": "1993-08-05", "photo": "users/2019/08/01/shark1.jpeg"}}]
