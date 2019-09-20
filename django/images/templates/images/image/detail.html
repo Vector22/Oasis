@@ -13,7 +13,7 @@
 <div id="detail-block">
     {% load thumbnail %}
     {% thumbnail image.image "300" as im %}
-    <a href="{{ image.image.url }}">
+    <a href="{{ image.get_absolute_url }}">
         <img src="{{ im.url }}" class="image-detail">
     </a>
     {% endthumbnail %}

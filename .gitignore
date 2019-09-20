@@ -3,3 +3,6 @@ env/
 django/config/__pycache__/
 node_modules/
 django/media/cache/
+django/media/images_uploaded_cache/
+media/images_uploaded_cache/
+
