@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+# For ABSOLUTE_URL_OVERRIDES
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -178,3 +180,13 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '373723408738-uh0l60pb8a33ssbmj6ce9tdulb34dmtm.apps.googleusercontent.com'
 # Google Consumer Secret
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'iBJky8RwwzUog80yujsJr0aZ'
+
+
+# Another way to define a get_absolute_url
+# to specify an URL for a model
+
+ABSOLUTE_URL_OVERRIDES = {
+    # Add dynamically a get_absolute_url method to auth.user model
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}

@@ -1,0 +1,13 @@
+
+.user-img {
+    border-radius: 90px/90px;
+}
+
+.user-img:hover {
+    border: 2px solid gray;
+    box-shadow: 0px 0px 4px;
+}
+
+.user {
+    text-align: center;
+}

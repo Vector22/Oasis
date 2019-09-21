@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% block title %}{{ user.get_full_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ user.get_full_name }}</h1>
+<div class="profile-info">
+    {% thumbnail user.profile.photo "180x180" crop="100%" as im %}
+    <img src="{{ im.url }}" class="user-detail">
+    {% endthumbnail %}
+</div>
+{% with total_followers=user.followers.count %}
+<span class="count">
+    <span class="total">{{ total_followers }}</span>
+    follower{{ total_followers|pluralize }}
+</span>
+<a href="#" data-id="{{ user.id }}" data-action="{% if request.user in user.followers.all %}un{% endif %}follow"
+    class="follow button">
+    {% if request.user not in user.followers.all %}
+    Follow
+    {% else %}
+    Unfollow
+    {% endif %}
+</a>
+<div id="image-list" class="image-container">
+    <h3>Images bookmarked by {{ user.get_full_name }}</h3>
+    {% include "images/image/list_ajax.html" with images=user.images_created.all %}
+</div>
+{% endwith %}
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Load jscookie from CDN to use it in AJAX setup -->
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<!-- AJAX setup script -->
+<script type="text/javascript" src="{% static 'js/ajax-setup.js' %}"></script>
+<!-- jQuery UN/LIKE script -->
+<script type="text/javascript" src="{% static 'js/user/follow.js' %}"></script>
+{% endblock %}
