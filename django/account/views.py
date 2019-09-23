@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 
 from common.decorators import ajax_required
+from actions.utils import create_action
 
 from .forms import (LoginForm, UserRegistrationForm,
                     UserEditForm, ProfileEditForm)
@@ -15,8 +16,18 @@ from .models import Profile, Contact
 
 @login_required
 def dashboard(request):
+    # Display alls actions by default apart for the
+    # current user
+    actions = Action.objects.exclude(user=request.user)
+    following_ids = request.user.following.values_list('id', flat=True)
+
+    # If user is following others, retrieve only their actions
+    if following_ids:
+        actions = actions.filter(user_id__in=following_ids)
+    # Take only the first 10 of the list
+    actions = actions[:10]
     return render(request, 'account/dashboard.html',
-                  {'section': 'dashboard'})
+                  {'section': 'dashboard', 'actions': actions})
 
 
 def user_login(request):
@@ -57,6 +68,8 @@ def register(request):
             Profile.objects.create(user=new_user)
             # Save the User object
             new_user.save()
+            # Create an action
+            create_action(new_user, 'has created an account')
             return render(request, 'account/register_done.html',
                           {'new_user': new_user})
     else:
@@ -123,6 +136,8 @@ def user_follow(request):
                 Contact.objects.get_or_create(
                     user_from=request.user,
                     user_to=user)
+                # Create a action
+                create_action(request.user, 'is following', user)
             else:
                 Contact.objects.filter(user_from=request.user,
                                        user_to=user).delete()
