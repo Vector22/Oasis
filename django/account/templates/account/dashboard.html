@@ -25,3 +25,14 @@
 </p>
 
 {% endblock %}
+
+{% block aside %}
+    {{ block.super }}
+
+    <h3>What's happening</h3>
+    <div id="action-list">
+    {% for action in actions %}
+        {% include "actions/action/detail.html" %}
+    {% endfor %}
+    </div>
+{% endblock %}

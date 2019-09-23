@@ -12,6 +12,7 @@ from actions.utils import create_action
 from .forms import (LoginForm, UserRegistrationForm,
                     UserEditForm, ProfileEditForm)
 from .models import Profile, Contact
+from actions.models import Action
 
 
 @login_required
@@ -24,8 +25,10 @@ def dashboard(request):
     # If user is following others, retrieve only their actions
     if following_ids:
         actions = actions.filter(user_id__in=following_ids)
-    # Take only the first 10 of the list
-    actions = actions[:10]
+    # Take only the first 10 of the list with select_related
+    # and prefetch_related to improve performance for retrieving related objects
+    actions = actions.select_related(
+        'user', 'user__profile').prefetch_related('target')[:10]
     return render(request, 'account/dashboard.html',
                   {'section': 'dashboard', 'actions': actions})
 
