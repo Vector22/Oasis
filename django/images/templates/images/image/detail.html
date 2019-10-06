@@ -47,7 +47,7 @@
 
     <div class="image-likes">
         {% for user in image.users_like.all %}
-        <div>
+        <div class="liked-image">
             <img src="{{ user.profile.photo.url }}">
             <p>{{ user.first_name }}</p>
         </div>

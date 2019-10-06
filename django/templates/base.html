@@ -6,8 +6,6 @@
     <meta charset="UTF-8">
     <title>{% block title %}Oasis{% endblock %}</title>
     <link rel="icon" type="image/png" href="{% static 'favicon/favicon-32x32.png' %}" sizes="32x32" />
-    <!-- Boostrap css -->
-    <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% block styles %}
@@ -16,84 +14,83 @@
 
 <body>
     <header id="header">
+        <!-- head -->
+        <div class="header-pan">
+            <h1>Wellcome</h1>
+            <p>to the <b>0Asis</b>.</p>
+        </div>
+
+        <!-- nav -->
         <nav>
-            <div class="navbar navbar-expand-sm bg-dark">
-                <a href="{% url 'dashboard' %}" class="logo navbar-brand">0Asis</a>
-
-                {% if request.user.is_authenticated %}
-                <ul class="navbar-nav mx-auto">
-
-                    <li {% if section == "dashboard" %} class="active nav-item" {% else %} class="nav-item" {% endif %}>
-                        <a class="nav-link" href="{% url 'dashboard' %}">My dashboard</a>
-                    </li>
-                    <li {% if section == "images" %} class="active nav-item" {% else %} class="nav-item" {% endif %}>
-                        <a class="nav-link" href="{% url 'images:list' %}">Images</a>
-                    </li>
-                    <li {% if section == "people" %} class="active nav-item" {% else %} class="nav-item" {% endif %}>
-                        <a class="nav-link" href="{% url 'user_list' %}">People</a>
-                    </li>
-
-                </ul>
-                {% endif %}
-
-                <ul class="navbar-nav ml-auto">
-                    {% if request.user.is_authenticated %}
-                    <span class="navbar-text">
-                        Hello {{ request.user.username }},
-                    </span>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    {% endif %}
-                </ul>
-
+            <div class="">
+                <a href="{% url 'dashboard' %}" class="logo">0Asis</a>
             </div>
+
+            {% if request.user.is_authenticated %}
+
+                <div {% if section == "dashboard" %} class="active" {% else %} class="" {% endif %}>
+                    <a class="" href="{% url 'dashboard' %}">My dashboard</a>
+                </div>
+                <div {% if section == "images" %} class="active" {% else %} class="" {% endif %}>
+                    <a class="" href="{% url 'images:list' %}">Images</a>
+                </div>
+                <div {% if section == "people" %} class="active" {% else %} class="" {% endif %}>
+                    <a class="" href="{% url 'user_list' %}">People</a>
+                </div>
+
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <div class="nav-item">
+                    Hello {{ request.user.username }},
+                    <a class="" href="{% url 'logout' %}">Logout</a>
+                </div>
+            {% else %}
+                <div class="nav-item">
+                    <a class="" href="{% url 'login' %}">Login</a>
+                </div>
+            {% endif %}
         </nav>
     </header>
 
-    <div id="body-root" class="container-fluid">
-        <div class="row justify-content-md-center">
-            <div id="main-body" class="col-md-8 container">
-                {% block content %}
-                {% endblock %}
+    <!-- Root body -->
+    <div id="body-root" class="container">
+        <div id="main-body">
+            {% block content %}
+            {% endblock %}
 
-                <!-- Django messages -->
-                <p id="messages">
-                    <ul id="message-item">
-                        {% if messages %}
+            <!-- Django messages -->
+            <p id="messages">
+                <ul id="message-item">
+                    {% if messages %}
                         {% for message in messages %}
-                        <li class="{{ message.tags }}">
-                            {{ message|safe }}
-                            <a class="close">x</a>
-                        </li>
+                            <li class="{{ message.tags }}">
+                                {{ message|safe }}
+                                <a class="close">x</a>
+                            </li>
                         {% endfor %}
-                        {% endif %}
-                    </ul>
-                </p>
-            </div>
-
-            <aside id="aside-body" class="col-md-3 offset-md-1">
-                {% block aside %}
-                <h3>This is my social website...</h3>
-                {% endblock %}
-            </aside>
+                    {% endif %}
+                </ul>
+            </p>
         </div>
+
+        <!-- aside -->
+        <aside id="aside-body">
+            {% block aside %}
+                <h3>This is my social website...</h3>
+            {% endblock %}
+        </aside>
     </div>
 
     <footer>
         {% block footer %}
-        Powered by V3ct0r22
+            <div>Powered by V3ct0r22</div>
         {% endblock %}
     </footer>
 
     <!--JavaScript at end of body for optimized loading-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
 
     <!-- Additional JavaScript file -->
     <script type="text/javascript" src="{% static 'js/base.js' %}"></script>

@@ -1,0 +1,16 @@
+.bookmark-btn {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+    border: 1px solid #00cc44;
+    border-radius: 10px/8px;
+    color: #39ac73;
+    background-color: #fff;
+}
+
+.bookmark-btn:hover {
+    color: #fff;
+    background-color: #39ac73;
+    border: 1px solid #39ac73;
+}

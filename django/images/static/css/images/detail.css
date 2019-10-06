@@ -35,3 +35,8 @@ h1 {
 .like:hover {
     text-decoration: none;
 }
+
+.liked-image > img {
+    width: 150px;
+    height: 150px;
+}
