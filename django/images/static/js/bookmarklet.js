@@ -1,6 +1,7 @@
 (function () {
     var jquery_version = '3.4.1';
-    var site_url = 'https://5d325d16.ngrok.io/';
+    // var site_url = 'https://5d325d16.ngrok.io/';
+    var site_url = 'http://oasis.com:8000';
     var static_url = site_url + 'static/';
     var min_width = 100;
     var min_height = 100;
@@ -68,10 +69,10 @@
             if (typeof window.jQuery == 'undefined') {
                 if (--attempts > 0) {
                     // Calls himself in a few milliseconds
-                    window.setTimeout(arguments.callee, 250)
+                    window.setTimeout(arguments.callee, 250);
                 } else {
                     // Too much attempts to load, send error
-                    alert('An error ocurred while loading jQuery')
+                    alert('An error ocurred while loading jQuery');
                 }
             } else {
                 bookmarklet();
