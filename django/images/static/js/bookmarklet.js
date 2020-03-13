@@ -1,7 +1,7 @@
 (function () {
     var jquery_version = '3.4.1';
     // var site_url = 'https://5d325d16.ngrok.io/';
-    var site_url = 'http://oasis.com:8000';
+    var site_url = 'http://127.0.0.1:8000';
     var static_url = site_url + 'static/';
     var min_width = 100;
     var min_height = 100;
